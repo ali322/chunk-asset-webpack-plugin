@@ -1,0 +1,6 @@
+node_modules/
+example/node_modules/
+npm-debug.log
+example/dist/
+.vscode/
+__tests__/fixtures/dist/

@@ -1,0 +1,31 @@
+{
+  "name": "chunk-asset-webpack-plugin",
+  "version": "0.0.1",
+  "description": "chunk asset webpack plugin",
+  "main": "index.js",
+  "directories": {
+    "test": "mocha test"
+  },
+  "dependencies": {
+    "glob": "^7.1.2",
+    "lodash": "^4.17.5"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.4",
+    "rimraf": "^2.6.2",
+    "webpack": "^4.2.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ali322/chunk-transform-webpack-plugin.git"
+  },
+  "author": "alichen",
+  "license": "MIT"
+}
