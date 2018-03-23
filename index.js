@@ -1,7 +1,7 @@
 let mapKeys = require('lodash/mapKeys')
 let forEach = require('lodash/forEach')
 let includes = require('lodash/includes')
-let pickBy = require('lodash/pickBy')
+let omit = require('lodash/omit')
 let isFunction = require('lodash/isFunction')
 let isArray = require('lodash/isArray')
 
@@ -36,12 +36,11 @@ ChunkAssetPlugin.prototype.apply = function(compiler) {
         let files = isFunction(selected[chunkName])
         ? selected[chunkName](chunkFiles)
         : selected[chunkName]
-        if (isArray(files)) {
-          forEach(files, function(file, k) {
-            assetMap[chunkFiles[k]] = file
-          })
-        } else {
-          assetMap[chunkFiles] = files
+        forEach(files, function(file, k) {
+          assetMap[chunkFiles[k]] = file
+        })
+        if(files.length < chunkFiles.length) {
+          assets = omit(assets, chunkFiles.slice(files.length))
         }
         chunk.files = files
         namedChunks = namedChunks.set(chunkName, chunk)
@@ -49,9 +48,6 @@ ChunkAssetPlugin.prototype.apply = function(compiler) {
       return chunk
     })
     compilation.namedChunks = namedChunks
-    assets = pickBy(assets,function (content,fileName) {
-      return includes(Object.keys(assetMap), fileName)
-    })
     assets = mapKeys(assets, (content, assetName) => {
       if (assetMap[assetName]) {
         return assetMap[assetName]
@@ -62,7 +58,7 @@ ChunkAssetPlugin.prototype.apply = function(compiler) {
     compilation.assets = assets
     that.runing = true
     callback()
-  }
+  }.bind(this)
   if(compiler.hooks) {
     compiler.hooks.emit.tap('ChunkAssetPlugin', emit)
   } else {

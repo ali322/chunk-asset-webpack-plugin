@@ -2,7 +2,7 @@ chunk-asset-webpack-plugin [![Build Status](https://travis-ci.org/ali322/chunk-a
 ===
 [![NPM](https://nodei.co/npm/chunk-asset-webpack-plugin.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/chunk-asset-webpack-plugin/)
 
-useful webpack plugin that change chunk files on fly
+useful plugin that change chunk files when webpack emit
 
 Install
 ===

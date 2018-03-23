@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/ali322/chunk-transform-webpack-plugin.git"
+    "url": "git+ssh://git@github.com/ali322/chunk-asset-webpack-plugin.git"
   },
   "author": "alichen",
   "license": "MIT"
