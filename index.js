@@ -29,24 +29,30 @@ ChunkAssetPlugin.prototype.apply = function(compiler) {
       return
     }
     
-    compilation.chunks = chunks.map(function(chunk) {
+    let nextChunks = new Set()
+    compilation.chunks.forEach(function (chunk) {
       let chunkName = chunk.name
-      let chunkFiles = chunk.files
+      let chunkFiles = Array.from(chunk.files)
       if (includes(Object.keys(selected), chunkName)) {
         let files = isFunction(selected[chunkName])
-        ? selected[chunkName](chunkFiles)
-        : selected[chunkName]
-        forEach(files, function(file, k) {
+          ? selected[chunkName](chunkFiles)
+          : selected[chunkName]
+        forEach(files, function (file, k) {
           assetMap[chunkFiles[k]] = file
         })
-        if(files.length < chunkFiles.length) {
+        if (files.length < chunkFiles.length) {
           assets = omit(assets, chunkFiles.slice(files.length))
         }
-        chunk.files = files
+        files.forEach(function (file) {
+          if (chunk.files.has(file) === false) {
+            chunk.files.delete(file)
+          }
+        })
         namedChunks = namedChunks.set(chunkName, chunk)
       }
-      return chunk
+      nextChunks.add(chunk)
     })
+    compilation.chunks = nextChunks
     compilation.namedChunks = namedChunks
     assets = mapKeys(assets, (content, assetName) => {
       if (assetMap[assetName]) {
